@@ -1,0 +1,21 @@
+- name: Launch sns topic
+  cloudformation:
+   aws_access_key: "{{ aws_access_key }}"
+   aws_secret_key: "{{ aws_secret_key }}"
+   stack_name: "apb-sqs-standard-{{ stack_identifier }}"
+   state: "present"
+   region: "{{ region }}"
+   disable_rollback: false
+   template: "{{ role_path }}/files/SNSTopicSQSStandardQueue.yml"
+   template_parameters:
+     DelaySeconds: "{{ DelaySeconds }}"
+     MaximumMessageSize: "{{ MaximumMessageSize }}"
+     MessageRetentionPeriod: "{{ MessageRetentionPeriod }}"
+     ReceiveMessageWaitTimeSeconds: "{{ ReceiveMessageWaitTimeSeconds }}"
+     UsedeadletterQueue: "{{ UsedeadletterQueue }}"
+     VisibilityTimeout: "{{ VisibilityTimeout }}"
+   tags:
+     Stack: "ansible-cloudformation"
+     Application: "ansible-snssqs-standard"
+     Description: "{{ ansible_user_id }} sqs-standard {{ ApplicationName }}"
+  register: sns

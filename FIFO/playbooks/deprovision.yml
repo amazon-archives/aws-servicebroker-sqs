@@ -1,0 +1,9 @@
+- name: sqs fifo deprovision
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  roles:
+  - role: ansible.kubernetes-modules
+    install_python_requirements: no
+  - role: deprovision-sqs-fifo-apb-openshift
+    playbook_debug: false

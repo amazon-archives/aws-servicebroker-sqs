@@ -1,0 +1,23 @@
+- name: Launch sqs fifo  queue
+  cloudformation:
+   aws_access_key: "{{ aws_access_key }}"
+   aws_secret_key: "{{ aws_secret_key }}"
+   stack_name: "apb-sqs-fifo-{{ stack_identifier }}"
+   state: "present"
+   region: "{{ region }}"
+   disable_rollback: false
+   template: "{{ role_path }}/files/SQSFIFOQueue.yml"
+   template_parameters:
+     ContentBasedDeduplication: "{{ ContentBasedDeduplication }}"
+     QueueName: "{{ QueueName }}"
+     DelaySeconds: "{{ DelaySeconds }}"
+     MaximumMessageSize: "{{ MaximumMessageSize }}"
+     MessageRetentionPeriod: "{{ MessageRetentionPeriod }}"
+     ReceiveMessageWaitTimeSeconds: "{{ ReceiveMessageWaitTimeSeconds }}"
+     UsedeadletterQueue: "{{ UsedeadletterQueue }}"
+     VisibilityTimeout: "{{ VisibilityTimeout }}"
+   tags:
+     Stack: "ansible-cloudformation"
+     Application: "ansible-sqs-fifo"
+     Description: "{{ ansible_user_id }} sqs-fifo {{ ApplicationName }}"
+  register: sqs-fifo
