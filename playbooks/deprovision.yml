@@ -1,9 +1,12 @@
-- name: sqs standard deprovision
+- name: sqs-apb deprovision
   hosts: localhost
   gather_facts: false
   connection: local
+  vars:
+    state: absent
   roles:
   - role: ansible.kubernetes-modules
     install_python_requirements: no
-  - role: deprovision-sns-standard-apb-openshift
+  - role: ansibleplaybookbundle.asb-modules
+  - role: sqs-apb-openshift
     playbook_debug: false

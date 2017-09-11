@@ -1,0 +1,5 @@
+- include: standard.yml
+  when: _apb_plan_id == "standard"
+
+- include: fifo.yml
+  when: _apb_plan_id == "fifo"

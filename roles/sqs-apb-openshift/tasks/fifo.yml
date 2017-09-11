@@ -1,0 +1,39 @@
+#############################################################################
+# Provision sqs FIFO queue
+#############################################################################
+- name: Launch sqs fifo queue
+  cloudformation:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    stack_name: "apb-sqs-fifo-{{ stack_identifier }}"
+    state: "present"
+    region: "{{ region }}"
+    disable_rollback: false
+    template: "{{ role_path }}/files/SQSFIFOQueue.yml"
+    template_parameters:
+      ContentBasedDeduplication: "{{ ContentBasedDeduplication }}"
+      QueueName: "{{ QueueName }}"
+      DelaySeconds: "{{ DelaySeconds | string }}"
+      MaximumMessageSize: "{{ MaximumMessageSize | string }}"
+      MessageRetentionPeriod: "{{ MessageRetentionPeriod | string }}"
+      ReceiveMessageWaitTimeSeconds: "{{ ReceiveMessageWaitTimeSeconds }}"
+      UsedeadletterQueue: "{{ UsedeadletterQueue }}"
+      VisibilityTimeout: "{{ VisibilityTimeout | string }}"
+    tags:
+      Stack: "ansible-cloudformation"
+      Application: "ansible-sqs-fifo"
+      Description: "{{ ansible_user_id }} sqs-fifo {{ ApplicationName }}"
+  register: sqs-fifo
+  when: state == 'present'
+
+#############################################################################
+# Deprovision sqs fifo queue
+#############################################################################
+- name: Remove sqs fifo queue
+  cloudformation:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    stack_name: "apb-sqs-fifo-{{ stack_identifier }}"
+    state: "absent"
+    region: "{{ region }}"
+  when: state == 'absent'
