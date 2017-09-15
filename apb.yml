@@ -5,6 +5,7 @@ tags:
   - amazon
   - sqs
   - standard
+  - fifo
 bindable: true
 async: optional
 metadata:
@@ -18,7 +19,7 @@ plans:
     description: 'Managed SQS Queue (Standard)'
     free: false
     metadata:
-      displayName: "Amazon SQS Standard"
+      displayName: "Standard"
       longDescription: "Standard SQS APB"
       cost: $0.00
     parameters:
@@ -79,7 +80,7 @@ plans:
     description: Managed SQS Queue (FIFO)
     free: false
     metadata:
-      displayName: "Amazon SQS FIFO"
+      displayName: "FIFO"
       longDescription: "FIFO SQS APB"
       cost: $0.00
     parameters: 

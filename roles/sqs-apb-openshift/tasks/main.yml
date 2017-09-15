@@ -7,7 +7,10 @@
 - name: Encode bind credentials
   asb_encode_binding:
     fields:
-      QUEUE_ARN:  "{{ sqs_queue_arn }}"
-      QUEUE_NAME: "{{ sqs_queue_name }}"
-      QUEUE_URL:  "{{ sqs_queue_url }}"
+      AWS_SQS_QUEUE_ARN:  "{{ sqs_queue_arn }}"
+      AWS_SQS_QUEUE_NAME: "{{ sqs_queue_name }}"
+      AWS_SQS_QUEUE_URL:  "{{ sqs_queue_url }}"
+      AWS_ACCESS_KEY:     "{{ aws_access_key }}"
+      AWS_SECRET_KEY:     "{{ aws_secret_key }}"
+      AWS_REGION:         "{{ region }}"
   when: state == 'present'
