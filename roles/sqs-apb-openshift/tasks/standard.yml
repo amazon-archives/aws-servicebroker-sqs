@@ -1,0 +1,44 @@
+#############################################################################
+# Provision SQS Standard Queue
+#############################################################################
+- name: Launch SQS Standard
+  cloudformation:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    stack_name: "apb-sqs-standard-{{ stack_identifier }}"
+    state: "present"
+    region: "{{ region }}"
+    disable_rollback: false
+    template: "{{ role_path }}/files/SQSStandardQueue.yml"
+    template_parameters:
+      DelaySeconds: "{{ DelaySeconds | string }}"
+      MaximumMessageSize: "{{ MaximumMessageSize | string }}"
+      MessageRetentionPeriod: "{{ MessageRetentionPeriod | string }}"
+      ReceiveMessageWaitTimeSeconds: "{{ ReceiveMessageWaitTimeSeconds }}"
+      UsedeadletterQueue: "{{ UsedeadletterQueue }}"
+      VisibilityTimeout: "{{ VisibilityTimeout | string }}"
+    tags:
+      Stack: "ansible-cloudformation"
+      Application: "ansible-sqs-standard"
+      Description: "{{ ansible_user_id }} sqs-standard {{ ApplicationName }}"
+  register: sqs_standard
+  when: state == 'present'
+
+- name: Recording Queue Outputs Facts
+  set_fact:
+    sqs_queue_arn:  "{{ sqs_standard.stack_outputs.QueueARN }}"
+    sqs_queue_name: "{{ sqs_standard.stack_outputs.QueueName }}"
+    sqs_queue_url:  "{{ sqs_standard.stack_outputs.QueueURL }}"
+  when: state == 'present'
+
+#############################################################################
+# Deprovision sqs standard queue
+#############################################################################
+- name: Remove sqs standard queue
+  cloudformation:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    stack_name: "apb-sqs-standard-{{ stack_identifier }}"
+    state: "absent"
+    region: "{{ region }}"
+  when: state == 'absent'

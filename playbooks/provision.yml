@@ -1,9 +1,12 @@
-- name: sqs fifo deprovision
+- name: sqs-apb provision
   hosts: localhost
-  gather_facts: false
+  gather_facts: true
   connection: local
+  vars:
+    state: present
   roles:
   - role: ansible.kubernetes-modules
     install_python_requirements: no
-  - role: deprovision-sqs-fifo-apb-openshift
+  - role: ansibleplaybookbundle.asb-modules
+  - role: sqs-apb-openshift
     playbook_debug: false
