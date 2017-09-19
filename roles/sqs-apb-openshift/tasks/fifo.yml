@@ -1,7 +1,7 @@
 #############################################################################
 # Provision SQS FIFO Queue
 #############################################################################
-- name: Launch SQS FIFO
+- name: Launch SQS FIFO queue
   cloudformation:
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
@@ -22,11 +22,11 @@
     tags:
       Stack: "ansible-cloudformation"
       Application: "ansible-sqs-fifo"
-      Description: "{{ ansible_user_id }} sqs-fifo {{ ApplicationName }}"
+      Description: "{{ stack_identifier }} sqs-fifo"
   register: sqs_fifo
   when: state == 'present'
 
-- name: Recording Queue Outputs Facts
+- name: Recording SQS FIFO queue output facts
   set_fact:
     sqs_queue_arn:  "{{ sqs_fifo.stack_outputs.QueueARN }}"
     sqs_queue_name: "{{ sqs_fifo.stack_outputs.QueueName }}"
@@ -34,9 +34,9 @@
   when: state == 'present'
 
 #############################################################################
-# Deprovision sqs fifo queue
+# Deprovision SQS FIFO queue
 #############################################################################
-- name: Remove sqs fifo queue
+- name: Remove SQS FIFO queue
   cloudformation:
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
