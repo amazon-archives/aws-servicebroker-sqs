@@ -6,7 +6,7 @@ Amazon Simple Queue Service Ansible Playbook Bundle (SQS APB)
 Deploys AWS SQS in OpenShift via CloudFormation Template.
 
 ## Requirements
-* Openshift v3.6 or later with [Service Catalog](https://github.com/kubernetes-incubator/service-catalog) & [Ansible Service Broker](https://github.com/openshift/ansible-service-broker)
+* Openshift v3.7 or later with [Service Catalog](https://github.com/kubernetes-incubator/service-catalog) & [Ansible Service Broker](https://github.com/openshift/ansible-service-broker)
 * AWS account ACCESS and SECRET Key pair
 
 ## Demo Video
