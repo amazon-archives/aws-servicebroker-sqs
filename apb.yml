@@ -119,7 +119,7 @@ plans:
       - name: DelaySeconds
         required: true
         title: Delay Seconds
-        description: 'The Id of the AMI you wish to launch the instance from.'
+        description: 'Delay (seconds)'
         type: int
         default: 5
       - name: MaximumMessageSize
