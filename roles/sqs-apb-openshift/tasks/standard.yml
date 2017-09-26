@@ -21,14 +21,14 @@
       Stack: "ansible-cloudformation"
       Application: "ansible-sqs-standard"
       Description: "{{ stack_identifier }} sqs-standard"
-  register: sqs_standard
+  register: sqs
   when: state == 'present'
 
 - name: Recording SQS standard queue output facts
   set_fact:
-    sqs_queue_arn:  "{{ sqs_standard.stack_outputs.QueueARN }}"
-    sqs_queue_name: "{{ sqs_standard.stack_outputs.QueueName }}"
-    sqs_queue_url:  "{{ sqs_standard.stack_outputs.QueueURL }}"
+    sqs_queue_arn:  "{{ sqs.stack_outputs.QueueARN }}"
+    sqs_queue_name: "{{ sqs.stack_outputs.QueueName }}"
+    sqs_queue_url:  "{{ sqs.stack_outputs.QueueURL }}"
   when: state == 'present'
 
 #############################################################################

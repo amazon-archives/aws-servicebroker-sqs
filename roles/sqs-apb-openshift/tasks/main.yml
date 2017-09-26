@@ -45,6 +45,10 @@
     state: absent
   when: state == 'absent'
 
+- name: Check for CloudFormation error logs
+  debug:
+    var: sqs.log
+
 - name: Encode bind credentials
   asb_encode_binding:
     fields:
