@@ -1,5 +1,5 @@
+version: 1.0
 name: sqs-apb
-image: ansibleplaybookbundle/sqs-apb
 description: Amazon Managed SQS Queue APB Implementation
 tags:
   - amazon
