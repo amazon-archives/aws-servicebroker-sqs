@@ -22,21 +22,30 @@ plans:
       longDescription: "Standard SQS APB"
       cost: $0.00
     parameters:
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sqs-stack", "production-sqs-09-2017")'
-        type: string
+      ##########################
+      # AWS Account Information
+      ##########################
       - name: aws_access_key
         required: true
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
+        display_group: AWS Account Information
       - name: aws_secret_key
         required: true
         title: AWS Secret Key
         description: 'AWS Secret Key to authenticate to AWS with.'
         type: string
+        display_group: AWS Account Information
+      ##########################
+      # Standard Queue Settings
+      ##########################
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sqs-stack", "production-sqs-09-2017")'
+        type: string
+        display_group: Standard Queue Parameters
       - name: region
         title: AWS Region
         description: 'AWS Region to create RDS instance in.'
@@ -57,47 +66,105 @@ plans:
           - us-west-1
           - us-west-2
         default: us-west-2
+        display_group: Standard Queue Parameters
       - name: DelaySeconds
         required: true
         title: Delay Seconds
         description: 'Delay (seconds)'
         type: int
         default: 5
+        display_group: Standard Queue Parameters
       - name: MaximumMessageSize
         title: Maximum Message Size
         description: 'The limit of how many bytes that a message can contain before Amazon SQS rejects it, 1024 bytes (1 KiB) to 262144 bytes (256 KiB)'
         type: int
         default: 262144
+        display_group: Standard Queue Parameters
       - name: MessageRetentionPeriod
         title: Message Retention Period
         description: 'The number of seconds that Amazon SQS retains a message. You can specify an integer value from 60 seconds (1 minute) to 1209600 seconds (14 days).'
         type: int
         default: 345600
+        display_group: Standard Queue Parameters
       - name: ReceiveMessageWaitTimeSeconds
         title: Receive Message Wait Time Seconds
         description: 'Specifies the duration, in seconds, that the ReceiveMessage action call waits until a message is in the queue in order to include it in the response, as opposed to returning an empty response if a message is not yet available. 1 to 20'
         enum: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
         type: enum
         default: "1"
+        display_group: Standard Queue Parameters
       - name: UsedeadletterQueue
         title: Use Dead Letter Queue
         description: 'A dead-letter queue is a queue that other (source) queues can target for messages that can not be processed (consumed) successfully. You can set aside and isolate these messages in the dead-letter queue to determine why their processing does not succeed.'
         enum: ["true", "false"]
         type: enum
         default: "false"
+        display_group: Standard Queue Parameters
       - name: VisibilityTimeout
         title: Visibility Timeout
         description: 'This should be longer than the time it would take to process and delete a message, this should not exceed 12 hours.'
         type: int
         default: 5
+        display_group: Standard Queue Parameters
   - name: fifo
-    description: Managed SQS Queue (FIFO)
+    description: 'Managed SQS Queue (FIFO)'
     free: false
     metadata:
       displayName: "FIFO"
       longDescription: "FIFO SQS APB"
       cost: $0.00
     parameters: 
+      ##########################
+      # AWS Account Information
+      ##########################
+      - name: aws_access_key
+        required: true
+        title: AWS Access Key
+        description: 'AWS Access Key to authenticate to AWS with.'
+        type: string
+        display_group: AWS Account Information
+      - name: aws_secret_key
+        required: true
+        title: AWS Secret Key
+        description: 'AWS Secret Key to authenticate to AWS with.'
+        type: string
+        display_group: AWS Account Information
+      ######################
+      # FIFO Queue Settings
+      ######################
+      - name: stack_identifier
+        required: true
+        title: Unique Stack Identifier
+        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sqs-stack", "production-sqs-09-2017")'
+        type: string
+        display_group: FIFO Queue Parameters
+      - name: QueueName
+        required: true
+        title: Queue Name
+        description: 'The name of the Queue this stack will append .fifo to the name provided here'
+        type: string
+        display_group: FIFO Queue Parameters
+      - name: region
+        title: AWS Region
+        description: 'AWS Region to create RDS instance in.'
+        type: enum
+        enum:
+          - ap-northeast-1
+          - ap-northeast-2
+          - ap-south-1
+          - ap-southeast-1
+          - ap-southeast-2
+          - ca-central-1
+          - eu-central-1
+          - eu-west-1
+          - eu-west-2
+          - sa-east-1
+          - us-east-1
+          - us-east-2
+          - us-west-1
+          - us-west-2
+        default: us-west-2
+        display_group: FIFO Queue Parameters
       - name: ContentBasedDeduplication
         required: true
         title: Content Based Duplication
@@ -105,76 +172,43 @@ plans:
         enum: ["true", "false"]
         type: enum
         default: "true"
-      - name: QueueName
-        required: true
-        title: Queue Name
-        description: 'The name of the Queue this stack will append .fifo to the name provided here'
-        type: string
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sqs-stack", "production-sqs-09-2017")'
-        type: string
-      - name: aws_access_key
-        required: true
-        title: AWS Access Key
-        description: 'AWS Access Key to authenticate to AWS with.'
-        type: string
-      - name: aws_secret_key
-        required: true
-        title: AWS Secret Key
-        description: 'AWS Secret Key to authenticate to AWS with.'
-        type: string
-      - name: region
-        title: AWS Region
-        description: 'AWS Region to create RDS instance in.'
-        type: enum
-        enum:
-          - ap-northeast-1
-          - ap-northeast-2
-          - ap-south-1
-          - ap-southeast-1
-          - ap-southeast-2
-          - ca-central-1
-          - eu-central-1
-          - eu-west-1
-          - eu-west-2
-          - sa-east-1
-          - us-east-1
-          - us-east-2
-          - us-west-1
-          - us-west-2
-        default: us-west-2
+        display_group: FIFO Queue Parameters
       - name: DelaySeconds
         required: true
         title: Delay Seconds
         description: 'Delay (seconds)'
         type: int
         default: 5
+        display_group: FIFO Queue Parameters
       - name: MaximumMessageSize
         title: Maximum Message Size
         description: 'The limit of how many bytes that a message can contain before Amazon SQS rejects it, 1024 bytes (1 KiB) to 262144 bytes (256 KiB)'
         type: int
         default: 262144
+        display_group: FIFO Queue Parameters
       - name: MessageRetentionPeriod
         title: Message Retention Period
         description: 'The number of seconds that Amazon SQS retains a message. You can specify an integer value from 60 seconds (1 minute) to 1209600 seconds (14 days).'
         type: int
         default: 345600
+        display_group: FIFO Queue Parameters
       - name: ReceiveMessageWaitTimeSeconds
         title: Receive Message Wait Time Seconds
         description: 'Specifies the duration, in seconds, that the ReceiveMessage action call waits until a message is in the queue in order to include it in the response, as opposed to returning an empty response if a message is not yet available. 1 to 20'
         enum: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
         type: enum
         default: "1"
+        display_group: FIFO Queue Parameters
       - name: UsedeadletterQueue
         title: Use Dead Letter Queue
         description: 'A dead-letter queue is a queue that other (source) queues can target for messages that can not be processed (consumed) successfully. You can set aside and isolate these messages in the dead-letter queue to determine why their processing does not succeed.'
         enum: ["true", "false"]
         type: enum
         default: "false"
+        display_group: FIFO Queue Parameters
       - name: VisibilityTimeout
         title: Visibility Timeout
         description: 'This should be longer than the time it would take to process and delete a message, this should not exceed 12 hours.'
         type: int
         default: 5
+        display_group: FIFO Queue Parameters

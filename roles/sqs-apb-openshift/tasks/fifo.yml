@@ -1,12 +1,13 @@
 #############################################################################
-# Provision SQS FIFO Queue
+# SQS FIFO Queue
 #############################################################################
-- name: Launch SQS FIFO queue
+---
+- name: SQS FIFO Queue - {{ apb_action }}
   cloudformation:
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
     stack_name: "apb-sqs-fifo-{{ stack_identifier }}"
-    state: "present"
+    state: "{{ state }}"
     region: "{{ region }}"
     disable_rollback: false
     template: "{{ role_path }}/files/SQSFIFOQueue.yml"
@@ -24,23 +25,10 @@
       Application: "ansible-sqs-fifo"
       Description: "{{ stack_identifier }} sqs-fifo"
   register: sqs
-  when: state == 'present'
 
 - name: Recording SQS FIFO queue output facts
   set_fact:
     sqs_queue_arn:  "{{ sqs.stack_outputs.QueueARN }}"
     sqs_queue_name: "{{ sqs.stack_outputs.QueueName }}"
     sqs_queue_url:  "{{ sqs.stack_outputs.QueueURL }}"
-  when: state == 'present'
-
-#############################################################################
-# Deprovision SQS FIFO queue
-#############################################################################
-- name: Remove SQS FIFO queue
-  cloudformation:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    stack_name: "apb-sqs-fifo-{{ stack_identifier }}"
-    state: "absent"
-    region: "{{ region }}"
-  when: state == 'absent'
+  when: sqs.stack_outputs is defined

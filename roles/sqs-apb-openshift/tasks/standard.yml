@@ -1,12 +1,13 @@
 #############################################################################
-# Provision SQS Standard Queue
+# SQS Standard Queue
 #############################################################################
-- name: Launch SQS standard queue
+---
+- name: SQS Standard Queue - {{ apb_action }}
   cloudformation:
     aws_access_key: "{{ aws_access_key }}"
     aws_secret_key: "{{ aws_secret_key }}"
     stack_name: "apb-sqs-standard-{{ stack_identifier }}"
-    state: "present"
+    state: "{{ state }}"
     region: "{{ region }}"
     disable_rollback: false
     template: "{{ role_path }}/files/SQSStandardQueue.yml"
@@ -22,23 +23,10 @@
       Application: "ansible-sqs-standard"
       Description: "{{ stack_identifier }} sqs-standard"
   register: sqs
-  when: state == 'present'
 
 - name: Recording SQS standard queue output facts
   set_fact:
     sqs_queue_arn:  "{{ sqs.stack_outputs.QueueARN }}"
     sqs_queue_name: "{{ sqs.stack_outputs.QueueName }}"
     sqs_queue_url:  "{{ sqs.stack_outputs.QueueURL }}"
-  when: state == 'present'
-
-#############################################################################
-# Deprovision sqs standard queue
-#############################################################################
-- name: Remove SQS standard queue
-  cloudformation:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    stack_name: "apb-sqs-standard-{{ stack_identifier }}"
-    state: "absent"
-    region: "{{ region }}"
-  when: state == 'absent'
+  when: sqs.stack_outputs is defined
