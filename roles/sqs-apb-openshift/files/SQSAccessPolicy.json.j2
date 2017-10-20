@@ -3,10 +3,17 @@
     "Statement": [
         {
             "Action": [
-                "sqs:*"
+                "sqs:ChangeMessageVisibility",
+                "sqs:ChangeMessageVisibilityBatch",
+                "sqs:DeleteMessage",
+                "sqs:DeleteMessageBatch",
+                "sqs:ReceiveMessage",
+                "sqs:PurgeQueue",
+                "sqs:SendMessage",
+                "sqs:SendMessageBatch"
             ],
             "Effect": "Allow",
-            "Resource": "*"
+            "Resource": "{{ sqs_queue_arn }}"
         }
     ]
 }
