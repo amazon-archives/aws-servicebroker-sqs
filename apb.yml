@@ -13,8 +13,9 @@ metadata:
   imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSQS_LARGE.png"
   documentationUrl: "https://aws.amazon.com/documentation/sqs/"
   longDescription: "Amazon Simple Queue Service (Amazon SQS) is a fully managed message queuing service that makes it easy to decouple and scale microservices, distributed systems, and serverless applications. Amazon SQS moves data between distributed application components and helps you decouple these components."
+  providerDisplayName: "THP"
 plans:
-  - name: standard
+  - name: sqs-standard
     description: 'Managed SQS Queue (Standard)'
     free: false
     metadata:
@@ -30,7 +31,6 @@ plans:
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
-        display_type: password
         display_group: AWS Account Information
       - name: aws_secret_key
         required: true
@@ -39,15 +39,15 @@ plans:
         type: string
         display_type: password
         display_group: AWS Account Information
+      - name: aws_cloudformation_role_arn
+        required: true
+        title: AWS Cloudformation role ARN
+        description: 'IAM role ARN for use as Cloudformation Stack Role.'
+        type: string
+        display_group: AWS Account Information
       ##########################
       # Standard Queue Settings
       ##########################
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sqs-stack", "production-sqs-09-2017")'
-        type: string
-        display_group: Standard Queue Parameters
       - name: region
         title: AWS Region
         description: 'AWS Region to create RDS instance in.'
@@ -108,7 +108,7 @@ plans:
         type: int
         default: 5
         display_group: Standard Queue Parameters
-  - name: fifo
+  - name: sqs-fifo
     description: 'Managed SQS Queue (FIFO)'
     free: false
     metadata:
@@ -124,7 +124,6 @@ plans:
         title: AWS Access Key
         description: 'AWS Access Key to authenticate to AWS with.'
         type: string
-        display_type: password
         display_group: AWS Account Information
       - name: aws_secret_key
         required: true
@@ -133,21 +132,15 @@ plans:
         type: string
         display_type: password
         display_group: AWS Account Information
+      - name: aws_cloudformation_role_arn
+        required: true
+        title: AWS Cloudformation role ARN
+        description: 'IAM role ARN for use as Cloudformation Stack Role.'
+        type: string
+        display_group: AWS Account Information
       ######################
       # FIFO Queue Settings
       ######################
-      - name: stack_identifier
-        required: true
-        title: Unique Stack Identifier
-        description: 'Unique identifier to be included in the CloudFormation Stack Name to prevent naming collisions. Must only contain alphanumeric characters and hyphens. (e.g. "sample-sqs-stack", "production-sqs-09-2017")'
-        type: string
-        display_group: FIFO Queue Parameters
-      - name: QueueName
-        required: true
-        title: Queue Name
-        description: 'The name of the Queue this stack will append .fifo to the name provided here'
-        type: string
-        display_group: FIFO Queue Parameters
       - name: region
         title: AWS Region
         description: 'AWS Region to create RDS instance in.'
@@ -171,7 +164,7 @@ plans:
         display_group: FIFO Queue Parameters
       - name: ContentBasedDeduplication
         required: true
-        title: Content Based Duplication
+        title: Content Based Deduplication
         description: 'specifies whether to enable content-based deduplication'
         enum: ["true", "false"]
         type: enum

@@ -4,9 +4,7 @@
 ---
 - name: SQS FIFO Queue - {{ apb_action }}
   cloudformation:
-    aws_access_key: "{{ aws_access_key }}"
-    aws_secret_key: "{{ aws_secret_key }}"
-    stack_name: "apb-sqs-fifo-{{ stack_identifier }}"
+    stack_name: "apb-sqs-fifo-{{ stack_suffix }}"
     state: "{{ state }}"
     region: "{{ region }}"
     disable_rollback: false
@@ -21,9 +19,7 @@
       UsedeadletterQueue: "{{ UsedeadletterQueue }}"
       VisibilityTimeout: "{{ VisibilityTimeout | string }}"
     tags:
-      Stack: "ansible-cloudformation"
-      Application: "ansible-sqs-fifo"
-      Description: "{{ stack_identifier }} sqs-fifo"
+      ServiceBrokerId: "{{ application_name }}"
   register: sqs
 
 - name: Recording SQS FIFO queue output facts

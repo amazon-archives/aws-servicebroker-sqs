@@ -2,6 +2,9 @@
   hosts: localhost
   gather_facts: true
   connection: local
+  environment:
+    AWS_ACCESS_KEY_ID: "{{ aws_access_key }}"
+    AWS_SECRET_ACCESS_KEY: "{{ aws_secret_key }}"
   vars:
     state: present
     apb_action: "Provisioning"
