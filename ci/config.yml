@@ -4,6 +4,6 @@ global:
     - us-east-1
 
 plans:
-  sns-topic:
+  sqs-fifo:
     parameters: {}
     sample_app: sqs-sample-app-apb
