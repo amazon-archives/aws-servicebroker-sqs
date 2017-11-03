@@ -8,6 +8,9 @@
 - name: set fact
   set_fact:
     stack_suffix: "{{ command_output.stdout }}"
+- name: Log stack suffix
+  debug:
+    msg: "stack_suffix: {{ stack_suffix }}"
 
 - include: standard.yml
   when: _apb_plan_id == "sqs-standard"
