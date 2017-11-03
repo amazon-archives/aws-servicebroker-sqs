@@ -5,5 +5,12 @@ global:
 
 plans:
   sqs-fifo:
-    parameters: {}
+    parameters:
+      ContentBasedDeduplication: "true"
+      DelaySeconds: 5
+      MaximumMessageSize: 262144
+      MessageRetentionPeriod: 345600
+      ReceiveMessageWaitTimeSeconds: "1"
+      UsedeadletterQueue: "false"
+      VisibilityTimeout: 5
     sample_app: sqs-sample-app-apb
