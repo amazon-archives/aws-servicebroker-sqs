@@ -4,7 +4,7 @@
 ---
 - name: SQS FIFO Queue - {{ apb_action }}
   cloudformation:
-    stack_name: "apb-sqs-fifo-{{ stack_suffix }}"
+    stack_name: "apb-sqs-{{ stack_suffix }}"
     state: "{{ state }}"
     region: "{{ region }}"
     disable_rollback: false
