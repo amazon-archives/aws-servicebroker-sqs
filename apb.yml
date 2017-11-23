@@ -13,7 +13,7 @@ metadata:
   imageUrl: "https://s3.amazonaws.com/thp-aws-icons-dev/Messaging_AmazonSQS_LARGE.png"
   documentationUrl: "https://aws.amazon.com/documentation/sqs/"
   longDescription: "Amazon Simple Queue Service (Amazon SQS) is a fully managed message queuing service that makes it easy to decouple and scale microservices, distributed systems, and serverless applications. Amazon SQS moves data between distributed application components and helps you decouple these components."
-  providerDisplayName: "awsservicebroker"
+  providerDisplayName: "Amazon Web Services"
 plans:
   - name: sqs-standard
     description: 'Managed SQS Queue (Standard)'
