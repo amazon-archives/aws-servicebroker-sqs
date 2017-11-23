@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Best Practice SQS Standard Queue
+Description: Best Practice SQS Standard Queue. qs-1nt0fs93h
 Parameters:
   DelaySeconds:
     Description: The Id of the AMI you wish to launch the instance from.
