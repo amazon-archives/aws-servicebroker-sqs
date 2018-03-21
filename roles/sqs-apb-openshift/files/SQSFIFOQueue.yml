@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   Best Practice SQS FIFO Queue, only avialable in us-east-1, us-west-2,
-  ue-west-1 at time of template creation. qs-1nt0fs93h
+  us-west-1 at time of template creation. qs-1nt0fs93h
 Parameters:
   ContentBasedDeduplication:
     Description: specifies whether to enable content-based deduplication
@@ -26,7 +26,7 @@ Parameters:
   MessageRetentionPeriod:
     Description: >-
       The number of seconds that Amazon SQS retains a message. You can specify
-      an integer value from 60 seconds (1 minute) to 1209600 seconds (14 days). 
+      an integer value from 60 seconds (1 minute) to 1209600 seconds (14 days).
     Type: Number
     Default: '345600'
   ReceiveMessageWaitTimeSeconds:
@@ -56,7 +56,7 @@ Parameters:
     Default: '5'
 Mappings: {}
 Conditions:
-  CreateDeadLetterQueue: !Equals 
+  CreateDeadLetterQueue: !Equals
     - !Ref UsedeadletterQueue
     - 'true'
 Resources:
@@ -65,16 +65,16 @@ Resources:
     Properties:
       ContentBasedDeduplication: !Ref ContentBasedDeduplication
       FifoQueue: 'true'
-      QueueName: !Join 
+      QueueName: !Join
         - ''
         - - !Ref QueueName
           - .fifo
       MaximumMessageSize: !Ref MaximumMessageSize
       MessageRetentionPeriod: !Ref MessageRetentionPeriod
       ReceiveMessageWaitTimeSeconds: !Ref ReceiveMessageWaitTimeSeconds
-      RedrivePolicy: !If 
+      RedrivePolicy: !If
         - CreateDeadLetterQueue
-        - deadLetterTargetArn: !GetAtt 
+        - deadLetterTargetArn: !GetAtt
             - MyDeadLetterQueue
             - Arn
           maxReceiveCount: 5
@@ -85,7 +85,7 @@ Resources:
     Type: 'AWS::SQS::Queue'
     Properties:
       FifoQueue: 'true'
-      QueueName: !Join 
+      QueueName: !Join
         - ''
         - - !Ref QueueName
           - Deadletter
@@ -96,11 +96,11 @@ Outputs:
     Value: !Ref SQSQueue
   QueueARN:
     Description: ARN of newly created SQS Queue
-    Value: !GetAtt 
+    Value: !GetAtt
       - SQSQueue
       - Arn
   QueueName:
     Description: Name newly created SQS Queue
-    Value: !GetAtt 
+    Value: !GetAtt
       - SQSQueue
       - QueueName
