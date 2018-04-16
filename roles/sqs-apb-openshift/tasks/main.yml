@@ -31,6 +31,7 @@
   template:
     src: "{{ role_path }}/files/SQSAccessPolicy.json.j2"
     dest: "/tmp/{{ stack_suffix }}.json"
+  when: state == 'present'
 
 - name: Attach SQS access IAM policy
   iam_policy:
